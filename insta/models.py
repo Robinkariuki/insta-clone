@@ -58,3 +58,21 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+
+class Comment(models.Model):
+    username = models.ForeignKey(User,on_delete=models.CASCADE)
+    post = models.ForeignKey(Post,on_delete=models.CASCADE)
+    comment = models.CharField(max_length = 300, blank=True)
+
+
+    def save_comment(self):
+        self.save()
+
+
+
+
+    def __str__(self):
+        return self.comment
+
