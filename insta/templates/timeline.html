@@ -1,1 +1,85 @@
 {% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+{{ block.super }}
+
+<div class="container">
+    <div class="row">
+        {% for post in posts %}
+        <div class="col-md-10 col-lg-10">
+            <!-- Card -->
+            <div class="card">
+                <div class="custom-card-header">
+                    <div class="modal-image">
+                        <!-- src="{{post.username.profile.profile_pic.url}} -->
+                        <!-- <img src="https://i.ibb.co/ZfxNb03/photo5767321775317823919.jpg" alt="photo5767321775317823919" border="0"> -->
+                        <img src="{{post.username.profile.profile_pic.url}} " class="rounded-circle z-depth-0"
+                            alt="avatar image" height="35" <p><strong>{{post.username}}</strong>
+                    </div>
+                    <!-- <p class="username"><strong>{{post.username}}</strong></p> -->
+                    <footer class="location">{{post.location}}</footer>
+                </div>
+
+                <!-- Card image -->
+                <div class="view overlay">
+                    <img class="card-img-top" src="{{post.post.url}}" alt="Card image cap"
+                        style="width: 100%; height: auto;">
+
+
+                    <a href="#!">
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                </div>
+
+                <!-- Card content -->
+                <div class="card-body">
+
+                    <!-- Title -->
+                    <!-- <h4 class="card-title">Card title</h4> -->
+                    <!-- Text -->
+                    <p class="card-title username like" id="likes-{{forloop.counter0}}" data-comid="{{post.id}}">
+                        {{post.likes}} likes</p>
+                    <p><strong>{{post.username}}</strong><span class="caption"> {{post.caption | safe}}</span></p>
+                    <hr>
+                    <hr>
+                    <div id="card{{post.id}}" class="mt-2">
+                        {% for comment in post.comment_set.all %}
+                        <p class="text"><em><strong>{{comment.username.username}}</strong></em> <span class="caption">
+                                {{comment.comment}}</span></p>
+                        <!-- <p><em><strong>{{comment.username.username}}</strong></em>    <span class="caption">{{comment.comment}}</span></p> -->
+
+                        {% endfor %}
+
+                    </div>
+
+
+
+                    <div class="text-center">
+                        <form method="post" action="{%url 'image-comment' post.id%}" enctype="multipart/form-data"
+                            class="commentformsize">
+                            {% csrf_token %}
+                            {% bootstrap_form form%}
+                        </form>
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+
+            <!-- Card -->
+            <br>
+            <br>
+        </div>
+
+
+        {%endfor%}
+
+    </div>
+
+</div>
+
+{% endblock %}
