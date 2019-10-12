@@ -9,3 +9,7 @@ class CommentForm(forms.ModelForm):
         widgets = {
             'myfield': forms.TextInput(attrs={'class': 'myfieldclass'}),
         }
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        exclude=['username','post_date','likes','p_pic']
