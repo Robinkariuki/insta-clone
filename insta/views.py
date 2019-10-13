@@ -47,3 +47,27 @@ def search_results(request):
     else:
         message = "You haven't searched for any username"
         return render(request,'search.html',{"message":message})
+
+
+
+
+
+@login_required(login_url='/accounts/login/')
+def profile(request):
+    current_user = request.user
+    current_user_id=request.user.id
+    form = CommentForm()
+    comments=Comment.objects.all()
+    # comment_number=len(comments)
+
+    try:
+        profile = Profile.objects.get(user=current_user)
+        posts = Post.objects.filter(username=current_user_id)
+        title = profile.user
+        username = profile.user
+        post_number = len(posts)
+
+    except ObjectDoesNotExist:
+        return redirect('home')
+
+    return render(request, 'profile.html',{"profile":profile,"posts":posts,"form":form,"post_number":post_number,"title":title,"username":username,"comments":comments})
