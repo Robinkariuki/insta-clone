@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from .models import Post,Profile,Comment
 from .forms import CommentForm,PostForm,ProfileForm
@@ -27,7 +27,7 @@ def Comment_Image(request,pk):
             comment.post = current_image
             comment.save()
             # comment.comment = user_comment
-            return redirect('home')
+            return redirect('Timeline')
 
         else:
-            return redirect('home')
+            return redirect('Timeline')
