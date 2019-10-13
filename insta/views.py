@@ -31,3 +31,19 @@ def Comment_Image(request,pk):
 
         else:
             return redirect('Timeline')
+
+
+def search_results(request):
+    current_user = request.user
+    current_user_id=request.user.id
+    posts = Post.objects.filter(username=current_user_id)
+    if 'searchname' in request.GET and request.GET['searchname']:
+        search_term = request.GET.get("searchname")
+        searched_names = Profile.search_profile(search_term)
+        message = f"{search_term}"
+
+        return render(request,'search.html', {"message":message, "usernames":searched_names,"posts":posts})
+
+    else:
+        message = "You haven't searched for any username"
+        return render(request,'search.html',{"message":message})
