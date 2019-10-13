@@ -1,17 +1,9 @@
 {% extends 'base.html' %}
+{% load bootstrap3 %}
+
+
 
 {% block content %}
-
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link rel="stylesheet" href="../static/css/profile.css">
-  <link rel="stylesheet" href="../static/css/base.css">
-
-</head>
-
 
 <div class="container">
   <div class="row text-center">
@@ -22,28 +14,73 @@
     {% endif %}
   </div>
 
+
   {% if users %}
   <div class="text-center">
-    <div class="panel" style="width: 40rem;">
-      <!-- <div class="custom-card-header"> -->
+    <div class="panel" style="width: 45rem;">
       <div class="panel-body">
-        {% for user in users%}
-        <!-- <div class="custom-card-header"> -->
+     {% for user in users%}
 
-        <div class="users-image">
-          <img src="{{user.profile_pic.url}}?w=50&h=50&fit=crop" class="gallery-image" alt=""  width=8 height=8>
-          <div class="search-username-center">
-          <p class="username profile-username"style="margin:auto;"><a href="/user-profile/{{user.id}}" style="color:black;"> {{user.username}}</a></p>
-        </div>
-        </div>
-        <!-- </div> -->
+     <!-- Card -->
+     <div class="card">
 
-        {% endfor %}
+       <!-- Card image -->
+       <div class="view overlay">
+         <img class="card-img-top" src="{{user.profile_pic.url}}"  alt="Card image cap">
+         <a href="#!">
+           <div class="mask rgba-white-slight"></div>
+         </a>
+       </div>
 
-      </div>
+       <!-- Card content -->
+       <div class="card-body">
+
+         <!-- Title -->
+         <h4 class="card-title">{{user.user}}</h4>
+         <hr>
+         <!-- Text -->
+         <p class="card-text"> {{user.bio}} </p>
+         <!-- Button -->
+         <ul>
+           <span class="profile-stat-count">{{posts_number}}</span> posts,
+           <span class="profile-stat-count">0</span> followers,
+           <span class="profile-stat-count">0</span> following
+         </ul>
+         <a href="{%url 'Timeline'%}" class="btn btn-primary">Home</a>
+
+       </div>
+
+     </div>
+     <!-- Card -->
+
+
+
+     {% endfor %}
+
+   </div>
     </div>
+
   </div>
-    {%endif %}
-</div>
+  {% endif %}
+
 
 {% endblock %}
+
+
+
+
+
+<!--
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+
+    </div>
+    <div class="col-sm">
+      One of three columns
+    </div>
+    <div class="col-sm">
+      One of three columns
+    </div>
+  </div>
+</div> -->

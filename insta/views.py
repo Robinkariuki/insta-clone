@@ -38,12 +38,12 @@ def search_results(request):
     current_user = request.user
     current_user_id=request.user.id
     posts = Post.objects.filter(username=current_user_id)
-    if 'searchname' in request.GET and request.GET['searchname']:
-        search_term = request.GET.get("searchname")
-        searched_names = Profile.search_profile(search_term)
+    if 'user' in request.GET and request.GET['user']:
+        search_term = request.GET.get("user")
+        searched_users= Profile.search_profile(search_term)
         message = f"{search_term}"
 
-        return render(request,'search.html', {"message":message, "usernames":searched_names,"posts":posts})
+        return render(request,'search.html', {"message":message, "users":searched_users,"posts":posts})
 
     else:
         message = "You haven't searched for any username"
