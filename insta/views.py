@@ -68,6 +68,6 @@ def profile(request):
         post_number = len(posts)
 
     except ObjectDoesNotExist:
-        return redirect('home')
+        return redirect('Timeline')
 
     return render(request, 'profile.html',{"profile":profile,"posts":posts,"form":form,"post_number":post_number,"title":title,"username":username,"comments":comments})

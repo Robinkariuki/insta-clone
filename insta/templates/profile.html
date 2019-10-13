@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+
+
+{% block content %}
+
+<div class="container">
+
+  <!-- Card -->
+<div class="card">
+
+  <!-- Card image -->
+  <div class="view overlay">
+    <img class="card-img-top " src="{{profile.profile_pic.url}}" alt="Card image cap" style="height: 250px; width: 250px">
+    <a href="#!">
+      <div class="mask rgba-white-slight"></div>
+    </a>
+  </div>
+
+  <!-- Card content -->
+  <div class="card-body">
+
+    <!-- Title -->
+    <h4 class="card-title">Username : <strong>{{profile.user}}</strong></h4>
+    <!-- Text -->
+    <p class="card-text"> {{profile.bio | safe }} </p>
+    <!-- Button -->
+    <hr>
+    <ul>
+      <li><span class="profile-stat-count">{{post_number}}</span> posts</li>
+      <li><span class="profile-stat-count">0</span> followers</li>
+      <li><span class="profile-stat-count">0</span> following</li>
+    </ul>
+
+  </div>
+
+</div>
+ <a href="{%url 'edit-profile' %}" class="btn purple-gradient">Edit Profile</a>
+
+<!-- Card -->
+  <br>
+  <br>
+  <hr>
+  <hr>
+  <!-- End of profile section -->
+
+  <div class="modal fade" id="settings" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content settings-modal">
+
+
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="container">
+  <div class="gallery">
+    {% for post in posts %}
+    <div class="col-6 col-md-4 padding-0 hover ">
+      <!-- Card -->
+      <div class="card">
+        <div class="custom-card-header">
+        <div class="modal-image">
+          <img  src="https://i.ibb.co/ZfxNb03/photo5767321775317823919.jpg?w=50&h=50&fit=crop"  class="rounded-circle z-depth-0" alt="avatar image" height="35"
+           <p><strong>{{post.username}}</strong>
+        </div>
+            <!-- <p class="username"><strong>{{post.username}}</strong></p> -->
+            <footer class="location">{{post.location}}</footer>
+        </div>
+
+        <!-- Card image -->
+        <div class="view overlay">
+          <img class="card-img-top" src="{{post.post.url}}" alt="Card image cap">
+          <a href="#!">
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+
+        <!-- Card content -->
+        <div class="card-body">
+
+          <!-- Title -->
+          <!-- <h4 class="card-title">Card title</h4> -->
+          <!-- Text -->
+          <p class="card-title username like"  id="likes-{{forloop.counter0}}" data-comid="{{post.id}}" >{{post.likes}} likes</p>
+          <p class="card-text"><strong>{{post.username}}</strong><span class="caption"> {{post.caption | safe}}</span></p>
+          <hr>
+          <hr>
+          <div id="card{{post.id}}"class="mt-2">
+            {% for comment in post.comment_set.all %}
+            <p class="text"><em><strong>{{comment.username.username}}</strong></em> <span class="caption"> {{comment.comment}}</span></p>
+              <!-- <p><em><strong>{{comment.username.username}}</strong></em>    <span class="caption">{{comment.comment}}</span></p> -->
+
+            {% endfor %}
+
+          </div>
+
+
+
+       <div class="text-center">
+         <form method="post" enctype="multipart/form-data" id='comment{{post.id}}' class="commentformsize">
+           {% csrf_token %}
+           {% bootstrap_form form%}
+         </form>
+       </div>
+
+
+
+
+        </div>
+
+      </div>
+
+      <!-- Card -->
+      <br>
+      <br>
+    </div>
+
+    {%endfor%}
+
+  </div>
+</div>
+
+{%endblock%}
