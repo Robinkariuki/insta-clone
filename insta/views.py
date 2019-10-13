@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from .models import Post,Profile,Comment
 from .forms import CommentForm,PostForm,ProfileForm
+from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
 @login_required(login_url='/accounts/login/')
 def timeline(request):
@@ -71,3 +72,22 @@ def profile(request):
         return redirect('Timeline')
 
     return render(request, 'profile.html',{"profile":profile,"posts":posts,"form":form,"post_number":post_number,"title":title,"username":username,"comments":comments})
+
+
+
+@login_required(login_url='/accounts/login')
+def edit_profile(request):
+
+    form=ProfileForm(instance=request.user.profile)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES,instance=request.user.profile)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = request.user
+            profile.save()
+
+        else:
+            form=ProfileForm()
+
+    return render(request,'edit_profile.html', {"form":form})
