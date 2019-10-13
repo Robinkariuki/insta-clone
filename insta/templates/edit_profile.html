@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+
+
+{% block content %}
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="logo-header">
+      <h1><strong>Edit Profile</strong></h1>
+      <hr>
+      <form  action="{% url 'edit-profile' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token%}
+        {% bootstrap_form form %}
+        <div class="form-group text-center">
+          <input type="submit" class = "btn btn-primary"  value="Post">
+        </div>
+        <input type="hidden" name="next" value="{{next}}">
+      </form>
+
+
+    </div>
+  </div>
+</div>
+{% endblock %}
